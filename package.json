@@ -35,7 +35,7 @@
     "light-my-request": "^3.7.4",
     "multiparty": "^4.2.1",
     "standard": "^14.3.3",
-    "tap": "^12.7.0"
+    "tap": "^14.10.7"
   },
   "dependencies": {
     "readable-stream": "^3.6.0"
