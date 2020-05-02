@@ -1,6 +1,6 @@
-# form-method
+# form-auto-content
 
-[![Build Status](https://github.com/Eomm/form-method/workflows/ci/badge.svg)](https://github.com/Eomm/form-method/actions)
+[![Build Status](https://github.com/Eomm/form-auto-content/workflows/ci/badge.svg)](https://github.com/Eomm/form-auto-content/actions)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
@@ -9,7 +9,7 @@ Build a form payload without caring if it should be `application/x-www-form-urle
 ## Install
 
 ```
-npm install form-method
+npm install form-auto-content
 ```
 
 ## Usage
@@ -29,9 +29,9 @@ The module return a JSON like this:
 ### `x-www-form-urlencoded`
 
 ```js
-const formMethod = require('form-method')
+const formAutoContent = require('form-auto-content')
 
-const myForm = formMethod({
+const myForm = formAutoContent({
   field1: 'value1',
   field2: ['value2', 'value2.2'] // array are supported too!!
 })
@@ -43,9 +43,9 @@ myForm.headers // JSON with the `content-type` field set
 ### `multipart/form-data`
 
 ```js
-const formMethod = require('form-method')
+const formAutoContent = require('form-auto-content')
 
-const myForm = formMethod({
+const myForm = formAutoContent({
   field1: 'value1',
   field2: ['value2', 'value2.2'], // array are supported too!!
   myFile: fs.createReadStream('the-file.xml'),

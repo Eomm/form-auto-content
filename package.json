@@ -1,5 +1,5 @@
 {
-  "name": "form-method",
+  "name": "form-auto-content",
   "version": "1.0.0",
   "description": "Build a form without headache",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Eomm/form-method.git"
+    "url": "git+https://github.com/Eomm/form-auto-content.git"
   },
   "engines": {
     "node": ">=6"
   },
   "keywords": [
     "form",
-    "form-method",
+    "form-auto-content",
     "x-www-form-urlencoded",
     "multipart",
     "form-data",
@@ -28,9 +28,9 @@
   "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Eomm/form-method/issues"
+    "url": "https://github.com/Eomm/form-auto-content/issues"
   },
-  "homepage": "https://github.com/Eomm/form-method#readme",
+  "homepage": "https://github.com/Eomm/form-auto-content#readme",
   "devDependencies": {
     "light-my-request": "^3.7.4",
     "multiparty": "^4.2.1",

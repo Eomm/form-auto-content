@@ -6,7 +6,7 @@ const { Readable } = require('readable-stream') // to support node6
 
 module.exports = function formMethod (json) {
   if (!json || typeof json !== 'object') {
-    throw new Error('Input to form-method must be a json object')
+    throw new Error('Input must be a json object')
   }
   const form = new FormData()
   const hasFile = Object.keys(json)
