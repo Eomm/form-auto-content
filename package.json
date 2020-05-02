@@ -21,7 +21,9 @@
     "form-method",
     "x-www-form-urlencoded",
     "multipart",
-    "form-data"
+    "form-data",
+    "form-enctype",
+    "enctype"
   ],
   "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
   "license": "MIT",
@@ -34,5 +36,8 @@
     "multiparty": "^4.2.1",
     "standard": "^14.3.3",
     "tap": "^12.7.0"
+  },
+  "dependencies": {
+    "readable-stream": "^3.6.0"
   }
 }

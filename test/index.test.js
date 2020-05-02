@@ -22,8 +22,12 @@ test('application/x-www-form-urlencoded', t => {
     field2: 'value2'
   })
 
-  t.deepEquals(form.getPayload(), 'field1=value1&field2=value2')
-  t.deepEquals(form.getHeaders(), { 'content-type': 'application/x-www-form-urlencoded' })
+  let payload = ''
+  form.payload.on('data', data => { payload += data })
+  form.payload.on('end', () => {
+    t.deepEquals(payload, 'field1=value1&field2=value2')
+  })
+  t.deepEquals(form.headers, { 'content-type': 'application/x-www-form-urlencoded' })
 })
 
 test('application/x-www-form-urlencoded array', t => {
@@ -33,8 +37,12 @@ test('application/x-www-form-urlencoded array', t => {
     field2: 'value2'
   })
 
-  t.deepEquals(form.getPayload(), 'field1=value1&field1=value3&field2=value2')
-  t.deepEquals(form.getHeaders(), { 'content-type': 'application/x-www-form-urlencoded' })
+  let payload = ''
+  form.payload.on('data', data => { payload += data })
+  form.payload.on('end', () => {
+    t.deepEquals(payload, 'field1=value1&field1=value3&field2=value2')
+  })
+  t.deepEquals(form.headers, { 'content-type': 'application/x-www-form-urlencoded' })
 })
 
 test('multipart/form-data', t => {
@@ -44,7 +52,7 @@ test('multipart/form-data', t => {
     field2: fs.createReadStream('./LICENSE'),
     field3: 'true'
   })
-  t.ok(form.getHeaders()['content-type'].startsWith('multipart/form-data;'))
+  t.ok(form.headers['content-type'].startsWith('multipart/form-data;'))
 
   const dispatch = function (req, res) {
     const form = new multiparty.Form()
@@ -62,8 +70,8 @@ test('multipart/form-data', t => {
   inject(dispatch, {
     method: 'POST',
     url: '/',
-    payload: form.getPayload(),
-    headers: form.getHeaders()
+    payload: form.payload,
+    headers: form.headers
   }, (err, res) => {
     t.error(err)
     t.ok(res.headers['content-type'].startsWith('multipart/form-data;'))
@@ -75,7 +83,7 @@ test('multipart/form-data multiple file', t => {
   const form = formMethod({
     field1: [fs.createReadStream('./LICENSE'), fs.createReadStream('./LICENSE'), 'a string']
   })
-  t.ok(form.getHeaders()['content-type'].startsWith('multipart/form-data;'))
+  t.ok(form.headers['content-type'].startsWith('multipart/form-data;'))
 
   const dispatch = function (req, res) {
     const form = new multiparty.Form()
@@ -92,8 +100,8 @@ test('multipart/form-data multiple file', t => {
   inject(dispatch, {
     method: 'POST',
     url: '/',
-    payload: form.getPayload(),
-    headers: form.getHeaders()
+    payload: form.payload,
+    headers: form.headers
   }, (err, res) => {
     t.error(err)
     t.ok(res.headers['content-type'].startsWith('multipart/form-data;'))

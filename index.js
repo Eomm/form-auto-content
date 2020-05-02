@@ -2,6 +2,7 @@
 
 const FormData = require('form-data')
 const querystring = require('querystring')
+const { Readable } = require('readable-stream') // to support node6
 
 module.exports = function formMethod (json) {
   if (!json || typeof json !== 'object') {
@@ -17,18 +18,18 @@ module.exports = function formMethod (json) {
     }, false)
 
   let payload
-  const header = { 'content-type': null }
+  const headers = { 'content-type': null }
   if (hasFile) {
     payload = form
-    Object.assign(header, form.getHeaders())
+    Object.assign(headers, form.getHeaders())
   } else {
-    payload = querystring.stringify(json)
-    header['content-type'] = 'application/x-www-form-urlencoded'
+    payload = Readable.from(querystring.stringify(json))
+    headers['content-type'] = 'application/x-www-form-urlencoded'
   }
 
   return {
-    getPayload () { return payload },
-    getHeaders () { return header }
+    payload,
+    headers
   }
 }
 

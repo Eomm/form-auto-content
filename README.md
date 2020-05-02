@@ -17,6 +17,15 @@ npm install form-method
 This module will transform your JSON to a payload ready to submit to an HTTP server!
 The autosense feature will check if there is a `stream` or a `buffer` as input and it will act accordingly returning a `multipart/form-data` stream; otherwise it will create a `x-www-form-urlencoded` string.
 
+The module return a JSON like this:
+
+```js
+{
+  payload: Stream, // the data Stream
+  headers: {} // a JSON with the `content-type` field set
+}
+```
+
 ### `x-www-form-urlencoded`
 
 ```js
@@ -27,8 +36,8 @@ const myForm = formMethod({
   field2: ['value2', 'value2.2'] // array are supported too!!
 })
 
-myForm.getPayload() // return a string in application/x-www-form-urlencoded format
-myForm.getHeaders() // return a JSON with the `content-type` field set
+myForm.payload // Stream of the string in application/x-www-form-urlencoded format
+myForm.headers // JSON with the `content-type` field set
 ```
 
 ### `multipart/form-data`
@@ -44,8 +53,8 @@ const myForm = formMethod({
   wowBuffer: Buffer.from('a long string')
 })
 
-myForm.getPayload() // return a stream in multipart/form-data format
-myForm.getHeaders() // return a JSON with the `content-type` field set
+myForm.payload // Stream in multipart/form-data format
+myForm.headers // JSON with the `content-type` field set to multipart/form-data
 ```
 
 
