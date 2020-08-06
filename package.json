@@ -14,7 +14,7 @@
     "url": "git+https://github.com/Eomm/form-auto-content.git"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=10.17.0"
   },
   "keywords": [
     "form",
@@ -32,12 +32,10 @@
   },
   "homepage": "https://github.com/Eomm/form-auto-content#readme",
   "devDependencies": {
-    "light-my-request": "^3.7.4",
+    "light-my-request": "^4.0.1",
     "multiparty": "^4.2.1",
     "standard": "^14.3.3",
     "tap": "^12.7.0"
   },
-  "dependencies": {
-    "readable-stream": "^3.6.0"
-  }
+  "dependencies": {}
 }
