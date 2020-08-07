@@ -2,7 +2,7 @@
 
 const FormData = require('form-data')
 const querystring = require('querystring')
-const { Readable } = require('readable-stream') // to support node6
+const { Readable } = require('stream')
 
 module.exports = function formMethod (json) {
   if (!json || typeof json !== 'object') {
@@ -41,6 +41,7 @@ function unfold (k) {
   return { k, v }
 }
 
+// We need to support node 10 till April 2021
 function flatMap (acc, unfold) {
   if (Array.isArray(unfold)) {
     return acc.concat(unfold)
