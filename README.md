@@ -50,7 +50,27 @@ const myForm = formAutoContent({
   field2: ['value2', 'value2.2'], // array are supported too!!
   myFile: fs.createReadStream('the-file.xml'),
   multipleFiles: [fs.createReadStream('file1.xml'), fs.createReadStream('file2.xml')],
-  wowBuffer: Buffer.from('a long string')
+  wowBuffer: Buffer.from('a long string'),
+
+  // the file options are supported too:
+  myRenamedFile: {
+    value: fs.createReadStream('./foo.md'),
+    options: {
+      filename: 'bar.md',
+      contentType: 'text/markdown'
+    }
+  },
+  // also in arrays!
+  renamedArray: [
+    {
+      value: fs.createReadStream('./one.json'),
+      options: { filename: 'foo.json' }
+    },
+    {
+      value: fs.createReadStream('./two.json'),
+      options: { filename: 'bar.json' }
+    }
+  ]
 })
 
 myForm.payload // Stream in multipart/form-data format

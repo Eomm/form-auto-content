@@ -13,8 +13,13 @@ module.exports = function formMethod (json) {
     .map(unfold.bind(json))
     .reduce(flatMap, [])
     .reduce((isFile, { k, v }) => {
-      form.append(k, v)
-      return isFile || (v && ((typeof v.pipe === 'function' && v.readable !== false) || Buffer.isBuffer(v)))
+      const value = getValue(v)
+      const options = getOptions(v)
+      form.append(k, value, options)
+
+      return isFile || (value && (
+        (typeof value.pipe === 'function' && value.readable !== false) ||
+        Buffer.isBuffer(value)))
     }, false)
 
   let payload
@@ -31,6 +36,17 @@ module.exports = function formMethod (json) {
     payload,
     headers
   }
+}
+
+function getValue (o) { return getField(o, 'value') || o }
+function getOptions (o) { return getField(o, 'options') }
+
+function getField (o, field) {
+  if (typeof o === 'object' &&
+   Object.hasOwnProperty.call(o, field)) {
+    return o[field]
+  }
+  return undefined
 }
 
 function unfold (k) {
