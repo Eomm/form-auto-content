@@ -78,19 +78,10 @@ test('multipart/form-data', t => {
   })
 })
 
-test('multipart/form-data with options', t => {
-  t.plan(9)
+test('multipart/form-data multiple file', t => {
+  t.plan(7)
   const form = formMethod({
-    field1: ['👌', 'value1'],
-    field2: {
-      value: fs.createReadStream('./LICENSE'),
-      options: {
-        filename: 'bar.md',
-        contentType: 'text/markdown',
-        knownLength: 19806
-      }
-    },
-    field3: 'true'
+    field1: [fs.createReadStream('./LICENSE'), fs.createReadStream('./LICENSE'), 'a string']
   })
   t.ok(form.headers['content-type'].startsWith('multipart/form-data;'))
 
@@ -98,11 +89,9 @@ test('multipart/form-data with options', t => {
     const form = new multiparty.Form()
     form.parse(req, function (err, fields, files) {
       t.error(err)
-      t.equals(fields.field1[0], '👌')
-      t.equals(fields.field1[1], 'value1')
-      t.equals(files.field2[0].originalFilename, 'bar.md')
-      t.equals(fs.readFileSync(files.field2[0].path, 'utf-8'), fs.readFileSync('./LICENSE', 'utf-8'))
-      t.equals(fields.field3[0], 'true')
+      t.equals(fields.field1[0], 'a string')
+      t.equals(files.field1[0].originalFilename, 'LICENSE')
+      t.equals(files.field1[1].originalFilename, 'LICENSE')
       res.writeHead(200, { 'content-type': req.headers['content-type'] })
       res.end('')
     })
@@ -119,10 +108,22 @@ test('multipart/form-data with options', t => {
   })
 })
 
-test('multipart/form-data multiple file', t => {
-  t.plan(7)
+test('multipart/form-data with options', t => {
+  t.plan(12)
   const form = formMethod({
-    field1: [fs.createReadStream('./LICENSE'), fs.createReadStream('./LICENSE'), 'a string']
+    field1: ['👌', 'value1'],
+    field2: {
+      value: fs.createReadStream('./LICENSE'),
+      options: {
+        filename: 'bar.md',
+        contentType: 'text/markdown'
+      }
+    },
+    field3: 'true',
+    field4: [fs.createReadStream('./LICENSE'), {
+      value: fs.createReadStream('./LICENSE'),
+      options: { filename: 'suboption-in-array.md' }
+    }, 'a string']
   })
   t.ok(form.headers['content-type'].startsWith('multipart/form-data;'))
 
@@ -130,9 +131,14 @@ test('multipart/form-data multiple file', t => {
     const form = new multiparty.Form()
     form.parse(req, function (err, fields, files) {
       t.error(err)
-      t.equals(fields.field1[0], 'a string')
-      t.equals(files.field1[0].originalFilename, 'LICENSE')
-      t.equals(files.field1[1].originalFilename, 'LICENSE')
+      t.equals(fields.field1[0], '👌')
+      t.equals(fields.field1[1], 'value1')
+      t.equals(fields.field4[0], 'a string')
+      t.equals(files.field2[0].originalFilename, 'bar.md')
+      t.equals(fs.readFileSync(files.field2[0].path, 'utf-8'), fs.readFileSync('./LICENSE', 'utf-8'))
+      t.equals(fields.field3[0], 'true')
+      t.equals(files.field4[0].originalFilename, 'LICENSE')
+      t.equals(files.field4[1].originalFilename, 'suboption-in-array.md')
       res.writeHead(200, { 'content-type': req.headers['content-type'] })
       res.end('')
     })
