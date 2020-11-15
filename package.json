@@ -34,7 +34,7 @@
   "devDependencies": {
     "light-my-request": "^4.0.1",
     "multiparty": "^4.2.1",
-    "standard": "^15.0.0",
+    "standard": "^16.0.2",
     "tap": "^14.10.8"
   },
   "dependencies": {
