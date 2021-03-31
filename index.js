@@ -4,10 +4,13 @@ const FormData = require('form-data')
 const querystring = require('querystring')
 const { Readable } = require('stream')
 
-module.exports = function formMethod (json) {
+module.exports = function formMethod (json, opts) {
   if (!json || typeof json !== 'object') {
     throw new Error('Input must be a json object')
   }
+
+  const options = Object.assign({}, { payload: 'payload', headers: 'headers' }, opts)
+
   const form = new FormData()
   const hasFile = Object.keys(json)
     .map(unfold.bind(json))
@@ -33,8 +36,8 @@ module.exports = function formMethod (json) {
   }
 
   return {
-    payload,
-    headers
+    [options.payload]: payload,
+    [options.headers]: headers
   }
 }
 
