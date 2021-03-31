@@ -77,7 +77,7 @@ myForm.payload // Stream in multipart/form-data format
 myForm.headers // JSON with the `content-type` field set to multipart/form-data
 ```
 
-## Customize the output fields
+## Options
 
 To customize the output field names, add an extra option object with the `payload` and `headers` string!
 
