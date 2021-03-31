@@ -30,6 +30,21 @@ test('application/x-www-form-urlencoded', t => {
   t.deepEquals(form.headers, { 'content-type': 'application/x-www-form-urlencoded' })
 })
 
+test('custom data name', t => {
+  t.plan(2)
+  const form = formMethod({
+    field1: 'value1',
+    field2: 'value2'
+  }, { payload: 'body', headers: 'head' })
+
+  let payload = ''
+  form.body.on('data', data => { payload += data })
+  form.body.on('end', () => {
+    t.deepEquals(payload, 'field1=value1&field2=value2')
+  })
+  t.deepEquals(form.head, { 'content-type': 'application/x-www-form-urlencoded' })
+})
+
 test('application/x-www-form-urlencoded array', t => {
   t.plan(2)
   const form = formMethod({

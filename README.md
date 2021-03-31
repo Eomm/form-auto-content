@@ -77,6 +77,23 @@ myForm.payload // Stream in multipart/form-data format
 myForm.headers // JSON with the `content-type` field set to multipart/form-data
 ```
 
+## Options
+
+To customize the output field names, add an extra option object with the `payload` and `headers` string!
+
+```js
+const formAutoContent = require('form-auto-content')
+
+const option = { payload: 'body', headers: 'head' }
+const myCustomForm = formAutoContent({
+  field1: 'value1',
+  field2: ['value2', 'value2.2'] // array are supported too!!
+}, option)
+
+myForm.body // Stream of the string in application/x-www-form-urlencoded format
+myForm.head // JSON with the `content-type` field set
+```
+
 
 ## License
 
