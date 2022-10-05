@@ -1,7 +1,7 @@
 'use strict'
 
 const FormData = require('form-data')
-const querystring = require('querystring')
+const querystring = require('fast-querystring')
 const { Readable } = require('stream')
 
 module.exports = function formMethod (json, opts) {
@@ -13,8 +13,7 @@ module.exports = function formMethod (json, opts) {
 
   const form = new FormData()
   const hasFile = Object.keys(json)
-    .map(unfold.bind(json))
-    .reduce(flatMap, [])
+    .flatMap(unfold.bind(json))
     .reduce((isFile, { k, v }) => {
       const value = getValue(v)
       const options = getOptions(v)
@@ -58,13 +57,4 @@ function unfold (k) {
     return v.map(subVal => { return { k, v: subVal } })
   }
   return { k, v }
-}
-
-// We need to support node 10 till April 2021
-function flatMap (acc, unfold) {
-  if (Array.isArray(unfold)) {
-    return acc.concat(unfold)
-  }
-  acc.push(unfold)
-  return acc
 }
