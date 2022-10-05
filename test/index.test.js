@@ -25,9 +25,9 @@ test('application/x-www-form-urlencoded', t => {
   let payload = ''
   form.payload.on('data', data => { payload += data })
   form.payload.on('end', () => {
-    t.deepEquals(payload, 'field1=value1&field2=value2')
+    t.strictSame(payload, 'field1=value1&field2=value2')
   })
-  t.deepEquals(form.headers, { 'content-type': 'application/x-www-form-urlencoded' })
+  t.strictSame(form.headers, { 'content-type': 'application/x-www-form-urlencoded' })
 })
 
 test('custom data name', t => {
@@ -40,9 +40,9 @@ test('custom data name', t => {
   let payload = ''
   form.body.on('data', data => { payload += data })
   form.body.on('end', () => {
-    t.deepEquals(payload, 'field1=value1&field2=value2')
+    t.strictSame(payload, 'field1=value1&field2=value2')
   })
-  t.deepEquals(form.head, { 'content-type': 'application/x-www-form-urlencoded' })
+  t.strictSame(form.head, { 'content-type': 'application/x-www-form-urlencoded' })
 })
 
 test('application/x-www-form-urlencoded array', t => {
@@ -55,9 +55,9 @@ test('application/x-www-form-urlencoded array', t => {
   let payload = ''
   form.payload.on('data', data => { payload += data })
   form.payload.on('end', () => {
-    t.deepEquals(payload, 'field1=value1&field1=value3&field2=value2')
+    t.strictSame(payload, 'field1=value1&field1=value3&field2=value2')
   })
-  t.deepEquals(form.headers, { 'content-type': 'application/x-www-form-urlencoded' })
+  t.strictSame(form.headers, { 'content-type': 'application/x-www-form-urlencoded' })
 })
 
 test('multipart/form-data', t => {
@@ -73,10 +73,10 @@ test('multipart/form-data', t => {
     const form = new multiparty.Form()
     form.parse(req, function (err, fields, files) {
       t.error(err)
-      t.equals(fields.field1[0], '👌')
-      t.equals(fields.field1[1], 'value1')
-      t.equals(files.field2[0].originalFilename, 'LICENSE')
-      t.equals(fields.field3[0], 'true')
+      t.equal(fields.field1[0], '👌')
+      t.equal(fields.field1[1], 'value1')
+      t.equal(files.field2[0].originalFilename, 'LICENSE')
+      t.equal(fields.field3[0], 'true')
       res.writeHead(200, { 'content-type': req.headers['content-type'] })
       res.end('')
     })
@@ -104,9 +104,9 @@ test('multipart/form-data multiple file', t => {
     const form = new multiparty.Form()
     form.parse(req, function (err, fields, files) {
       t.error(err)
-      t.equals(fields.field1[0], 'a string')
-      t.equals(files.field1[0].originalFilename, 'LICENSE')
-      t.equals(files.field1[1].originalFilename, 'LICENSE')
+      t.equal(fields.field1[0], 'a string')
+      t.equal(files.field1[0].originalFilename, 'LICENSE')
+      t.equal(files.field1[1].originalFilename, 'LICENSE')
       res.writeHead(200, { 'content-type': req.headers['content-type'] })
       res.end('')
     })
@@ -146,14 +146,14 @@ test('multipart/form-data with options', t => {
     const form = new multiparty.Form()
     form.parse(req, function (err, fields, files) {
       t.error(err)
-      t.equals(fields.field1[0], '👌')
-      t.equals(fields.field1[1], 'value1')
-      t.equals(fields.field4[0], 'a string')
-      t.equals(files.field2[0].originalFilename, 'bar.md')
-      t.equals(fs.readFileSync(files.field2[0].path, 'utf-8'), fs.readFileSync('./LICENSE', 'utf-8'))
-      t.equals(fields.field3[0], 'true')
-      t.equals(files.field4[0].originalFilename, 'LICENSE')
-      t.equals(files.field4[1].originalFilename, 'suboption-in-array.md')
+      t.equal(fields.field1[0], '👌')
+      t.equal(fields.field1[1], 'value1')
+      t.equal(fields.field4[0], 'a string')
+      t.equal(files.field2[0].originalFilename, 'bar.md')
+      t.equal(fs.readFileSync(files.field2[0].path, 'utf-8'), fs.readFileSync('./LICENSE', 'utf-8'))
+      t.equal(fields.field3[0], 'true')
+      t.equal(files.field4[0].originalFilename, 'LICENSE')
+      t.equal(files.field4[1].originalFilename, 'suboption-in-array.md')
       res.writeHead(200, { 'content-type': req.headers['content-type'] })
       res.end('')
     })
