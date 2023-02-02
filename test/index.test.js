@@ -170,7 +170,6 @@ test('multipart/form-data with options', t => {
   })
 })
 
-
 test('multipart/form-data with no files', t => {
   t.plan(7)
   const form = formMethod({
