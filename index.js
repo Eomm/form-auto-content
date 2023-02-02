@@ -9,7 +9,7 @@ module.exports = function formMethod (json, opts) {
     throw new Error('Input must be a json object')
   }
 
-  const options = Object.assign({}, { payload: 'payload', headers: 'headers' }, opts)
+  const options = Object.assign({}, { payload: 'payload', headers: 'headers', forceMultiPart: false }, opts)
 
   const form = new FormData()
   const hasFile = Object.keys(json)
@@ -26,7 +26,7 @@ module.exports = function formMethod (json, opts) {
 
   let payload
   const headers = { 'content-type': null }
-  if (hasFile) {
+  if (hasFile || options.forceMultiPart) {
     payload = form
     Object.assign(headers, form.getHeaders())
   } else {
