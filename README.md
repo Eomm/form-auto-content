@@ -4,7 +4,8 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
-Build a form payload without caring if it should be `application/x-www-form-urlencoded` or `multipart/form-data`
+Build a form payload without caring if it should be `application/x-www-form-urlencoded` or `multipart/form-data`.
+It works with [`Fastify`](https://github.com/fastify/fastify/) and [`light-my-request`](https://github.com/fastify/light-my-request/) too!
 
 ## Install
 
