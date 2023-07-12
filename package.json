@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "tap test/**/*.test.js",
+    "test": "tap test/**/*.test.js && tsd",
     "test:typescript": "tsd"
   },
   "repository": {
