@@ -95,6 +95,49 @@ myForm.body // Stream of the string in application/x-www-form-urlencoded format
 myForm.head // JSON with the `content-type` field set
 ```
 
+## Typescript
+
+This module ships with a handwritten TypeScript declaration file for TS support. The declaration exports a single function.
+
+```ts
+import formAutoContent from 'form-auto-content';
+```
+
+When an options object is provided, the result types will be accurately inferred:
+
+```ts
+import formAutoContent from 'form-auto-content';
+
+const option = { payload: 'body', headers: 'head' } as const
+
+const myCustomForm = formAutoContent({
+  field1: 'value1',
+  field2: ['value2']
+}, option);
+
+myCustomForm.body // ok
+myCustomForm.head // ok
+
+myCustomForm.payload // Typescript error: property 'payload' does not exists in type...
+```
+
+Note the const assertion (`as const`) applied to the `option` object. This is a necessary step to ensure accurate type inference. By using the const assertion, the compiler will infer the most specific type for the object, resulting in precise type inference.
+
+You can omit this if you pass your options as an inline literal object:
+
+```ts
+import formAutoContent from 'form-auto-content';
+
+const myCustomForm = formAutoContent({
+  field1: 'value1',
+  field2: ['value2']
+}, { payload: 'body', headers: 'head' });
+
+myCustomForm.body // ok
+myCustomForm.head // ok
+
+myCustomForm.payload // Typescript error: property 'payload' does not exists in type...
+```
 
 ## License
 
