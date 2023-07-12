@@ -7,7 +7,8 @@
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "tap test/**/*.test.js"
+    "test": "tap test/**/*.test.js",
+    "test:typescript": "tsd"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "multiparty": "^4.2.1",
     "standard": "^17.0.0",
     "tap": "^16.3.0",
+    "tsd": "^0.28.1",
     "typescript": "^5.1.6"
   },
   "dependencies": {
