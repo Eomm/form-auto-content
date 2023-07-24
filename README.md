@@ -121,24 +121,6 @@ myCustomForm.head // ok
 myCustomForm.payload // Typescript error: property 'payload' does not exists in type...
 ```
 
-Note the const assertion (`as const`) applied to the `option` object. This is a necessary step to ensure accurate type inference. By using the const assertion, the compiler will infer the most specific type for the object, resulting in precise type inference.
-
-You can omit this if you pass your options as an inline literal object:
-
-```ts
-import formAutoContent from 'form-auto-content';
-
-const myCustomForm = formAutoContent({
-  field1: 'value1',
-  field2: ['value2']
-}, { payload: 'body', headers: 'head' });
-
-myCustomForm.body // ok
-myCustomForm.head // ok
-
-myCustomForm.payload // Typescript error: property 'payload' does not exists in type...
-```
-
 ## License
 
 Licensed under [MIT](./LICENSE).

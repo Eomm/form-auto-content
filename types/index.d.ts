@@ -6,9 +6,15 @@ export type FormMethodOptions = {
 }
 
 type FormMethodDefaultOptions = {
-  readonly payload?: 'payload',
-  readonly headers?: 'headers'
+  readonly payload: 'payload',
+  readonly headers: 'headers'
 }
+
+type Neverify<T> = {
+  [K in keyof T]: never
+}
+
+type WithoutExtraProperties<BaseType, Arg extends BaseType> = Arg & Neverify<Omit<Arg, keyof BaseType>>
 
 type ComputedFormProperty<T extends FormMethodOptions, Property extends keyof T, DefaultValue extends string, ReturnType> = {
     [K in T[Property] as keyof T[Property] extends never 
@@ -28,4 +34,8 @@ type FormMethodResult<T extends FormMethodOptions, K extends keyof T = keyof T> 
  * @param {FormMethodOptions}  opts - An object containing properties to modify the output field names.
  * @returns {FormMethodResult} A JSON object with a payload field representing the data stream and a headers field containing the content-type set to "application/json".
  */
-export default function formMethod<const T extends FormMethodOptions = FormMethodDefaultOptions>(json: Record<string, unknown>, opts?: T): FormMethodResult<T>
+export default function formMethod<T extends FormMethodOptions = FormMethodDefaultOptions>(
+    json: Record<string, unknown>,
+    opts?: T & WithoutExtraProperties<FormMethodOptions, T>
+): FormMethodResult<T>
+
