@@ -107,18 +107,18 @@ import { Readable } from "stream";
   formAutoContent({
     field1: 'value1',
     field2: ['value2', 'value2.2']
-    //@ts-expect-error
+    // @ts-expect-error
   }, { headers: 'head', foo: '' } as const);
 
   formAutoContent({
     field1: 'value1',
     field2: ['value2', 'value2.2']
-    //@ts-expect-error
+    // @ts-expect-error
   }, { payload: 'body', foo: '' } as const);
 
   formAutoContent({
     field1: 'value1',
     field2: ['value2', 'value2.2']
-    //@ts-expect-error
+    // @ts-expect-error
   }, { foo: '' } as const);
 }
