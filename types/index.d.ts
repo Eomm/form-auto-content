@@ -35,7 +35,7 @@ type FormMethodResult<T extends FormMethodOptions, K extends keyof T = keyof T> 
  * @returns {FormMethodResult} A JSON object with a payload field representing the data stream and a headers field containing the content-type set to "application/json".
  */
 export default function formMethod<T extends FormMethodOptions = FormMethodDefaultOptions>(
-    json: Record<string, unknown>,
-    opts?: T & WithoutExtraProperties<FormMethodOptions, T>
+  json: Record<string, unknown>,
+  opts?: T & WithoutExtraProperties<FormMethodOptions, T>
 ): FormMethodResult<T>
 
