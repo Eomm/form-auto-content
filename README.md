@@ -108,7 +108,11 @@ When an options object is provided, the result types will be accurately inferred
 ```ts
 import formAutoContent from 'form-auto-content';
 
-const option = { payload: 'body', headers: 'head' } as const
+const option = {
+  payload: 'body',
+  headers: 'head',
+  forceMultiPart: true,
+} as const;
 
 const myCustomForm = formAutoContent({
   field1: 'value1',

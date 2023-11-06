@@ -2,7 +2,8 @@ import { Readable } from "stream";
 
 export type FormMethodOptions = {
   readonly payload?: string,
-  readonly headers?: string
+  readonly headers?: string,
+  readonly forceMultiPart?: boolean
 }
 
 type FormMethodDefaultOptions = {

@@ -122,3 +122,28 @@ import { Readable } from "stream";
     // @ts-expect-error
   }, { foo: '' } as const);
 }
+
+{ // Test for forceMultiPart option set to true
+  const option = { forceMultiPart: true } as const;
+
+  const myForm = formAutoContent(
+    {
+      field1: 'value1',
+      field2: ['value2', 'value2.2'],
+    },
+    option
+  );
+
+  expectAssignable<{ payload: Readable; headers: Record<string, string> }>(myForm);
+}
+
+{ // Test for forceMultiPart option set to false
+  const option = { forceMultiPart: false } as const;
+
+  const myForm = formAutoContent({
+    field1: 'value1',
+    field2: ['value2', 'value2.2']
+  }, option);
+
+  expectAssignable<{ payload: Readable, headers: Record<string, string> }>(myForm);
+}
